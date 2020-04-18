@@ -1,0 +1,153 @@
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Login from "../views/login.vue"
+import Home from "../views/home.vue"
+Vue.use(VueRouter);
+const routes = [
+  {
+    path:'/',
+    name:'login',
+    component:Login
+  },
+  {
+    path: "/home",
+    name: "home",
+    component:Home,
+    //redirect: '/home/stuCourse',
+    children:[
+      {
+      path:'teaMessage',
+      name:'teaMessage',
+      component:()=>import('../components/teacher/teaMessage.vue'),
+      meta:{title:'留言',isShow:true},
+      },
+      {
+      path:'teaCourse',
+      name:'teaCourse',
+      component:()=>import('../components/teacher/teaCourse.vue'),
+      meta:{title:'课程信息',isShow:true},
+      children:[
+        {
+          path:'report',
+          name:'report',
+          component:()=>import('../components/teacher/report.vue'),
+          meta:{title:'编辑实验指导',isShow:false},
+      },
+      {
+        path:'reportList',
+        name:'reportList',
+        component:()=>import('../components/teacher/reportList.vue'),
+        meta:{title:'查看实验报告',isShow:false,myselfShow:true},
+        children:[
+          {
+            path:'reportContent',
+            name:'reportContent',
+            component:()=>import('../components/teacher/reportContent.vue'),
+            meta:{title:'查看报告册',myselfShow:false},
+          },
+          {
+            path:'teaGrade',
+            name:'teaGrade',
+            component:()=>import('../components/teacher/teaGrade.vue'),
+            meta:{title:'成绩情况',myselfShow:false},
+          },
+          {
+            path:'subStuList',
+            name:'subStuList',
+            component:()=>import('../components/teacher/subStuList.vue'),
+            meta:{title:'提交情况',myselfShow:false,Show:true},
+            children:[
+              {
+                path:'teaCheck',
+                name:'teaCheck',
+                component:()=>import('../components/teacher/teaCheck.vue'),
+                meta:{title:'批改',Show:false}
+              }],
+          }]
+      },]
+      },
+  
+      {
+      path:'stuCourse',
+      name:'stuCourse',
+      component:()=>import('../components/student/stuCourse.vue'),
+      meta:{title:'实验课程',isShow:true},
+      children:[
+        {
+          path:'stuReportList',
+          name:'stuReportList',
+          component:()=>import('../components/student/stuReportList.vue'),
+          meta:{title:'实验报告列表',show:true},
+          children:[{
+            path:'stuReport',
+            name:'stuReport',
+            component:()=>import('../components/student/stuReport.vue'),
+            meta:{title:'编辑实验报告册',show:false},
+            },]
+        },
+        {
+          path:'stuGrade',
+          name:'stuGrade',
+          component:()=>import('../components/student/stuGrade.vue'),
+          meta:{title:'实验成绩',show:true},
+        },
+        {
+          path:'stuMessage',
+          name:'stuMessage',
+          component:()=>import('../components/student/stuMessage.vue'),
+          meta:{title:'实验留言',show:true},
+        },
+      ]
+      },
+      {
+      path:'stuInfo',
+      name:'stuInfo',
+      component:()=>import('../components/student/stuInfo.vue'),
+      meta:{title:'个人设置',isShow:true},
+      },
+      {
+        path:'teaInfo',
+        name:'teaInfo',
+        component:()=>import('../components/teacher/teaInfo.vue'),
+        meta:{title:'个人设置',isShow:true},
+      },
+      {
+      path:'manageStu',
+      name:'manageStu',
+      component:()=>import('../components/manager/manageStu.vue'),
+      meta:{title:'用户信息修改',isShow:true},
+      },
+      {
+      path:'manageCourse',
+      name:'manageCourse',
+      component:()=>import('../components/manager/manageCourse.vue'),
+      meta:{title:'课程信息修改',isShow:true},
+      },
+      {
+      path:'manageClass',
+      name:'manageClass',
+      component:()=>import('../components/manager/manageClass.vue'),
+      meta:{title:'班级信息修改',isShow:true},
+      },
+      {
+      path:'manageTea',
+      name:'manageTea',
+      component:()=>import('../components/manager/manageTea.vue'),
+      meta:{title:'教师信息修改',isShow:true},
+      },
+      {
+      path:'manageNotice',
+      name:'manageNotice',
+      component:()=>import('../components/manager/manageNotice.vue'),
+      meta:{title:'发布系统通知',isShow:true},
+      },
+    ]
+  },
+  
+];
+
+const router = new VueRouter({
+  routes
+});
+
+export default router;
